@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Processed Images</title>
+    <style>
+        img {
+            width: 50%;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Processed Images</h1>
+    <div id="image-container">
+        <img id="current-image" src="{{ url_for('static', filename='upload/' + OGimages[0]) }}">
+    </div>
+
+    <script>
+        var currentIndex = 0;
+        var images = {{ OGimages|tojson }};
+
+        function updateImage() {
+            var currentImage = document.getElementById("current-image");
+            currentImage.src = "{{ url_for('static', filename='upload/') }}" + images[currentIndex];
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                updateImage();
+            } else if (event.key === 'ArrowRight') {
+                currentIndex = (currentIndex + 1) % images.length;
+                updateImage();
+            }
+        });
+    </script>
+</body>
+</html>

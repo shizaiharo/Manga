@@ -1,0 +1,9 @@
+keras
+numpy
+selenium
+Werkzeug
+manga-ocr
+tensorflow
+googletrans
+pytesseract
+Pillow==9.5.0
