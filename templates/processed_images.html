@@ -12,6 +12,9 @@
 </head>
 <body>
     <h1>Processed Images</h1>
+    <form action="/clear_and_back" method="post">
+        <input type="submit" value="Clear Uploaded & Processed Images">
+    </form>
     <div id="image-container">
         <img id="current-image" src="{{ url_for('static', filename='upload/' + OGimages[0]) }}">
     </div>
