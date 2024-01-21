@@ -48,6 +48,33 @@ def upload():
     return redirect(url_for('processed_images'))
 
 
+# @app.route('/processed_images')
+# def processed_images():
+#     # Get the list of processed images in the 'uploads' folder
+#     origenal_images_path = os.listdir(app.config['UPLOAD_FOLDER'])
+#     txt = 0
+#     for image_name in origenal_images_path:
+#         txt += 1
+#         image_quadtree = Quadtree()
+#         image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_name)
+#         image = Image.open(image_path)
+    
+#         image_quadtree.check_img(MainPath + "/temp/"+image_name.split('.')[0]+"_0",image)
+#         words_images_path = image_quadtree.get_images()
+#         #words_images_path = sorted(words_images_path, key=lambda x: gn(x))
+#         # tes(combine(words_images_path))
+#         combine(words_images_path)
+#         for words_image_path in words_images_path:
+#             word_image = Image.open(MainPath + "/temp/"+words_image_path)
+#             filename = words_image_path
+#             word_image.save(app.config['UPLOAD_FOLDER'] + "/" + filename)
+
+        
+#         #     # os.remove("temp/"+words_image_path) 
+#         # txt += image_quadtree.content
+            
+#     # return render_template('myconsole.html', info=txt)
+#     return render_template('processed_images.html', OGimages=origenal_images_path)
 @app.route('/processed_images')
 def processed_images():
     # Get the list of processed images in the 'uploads' folder
@@ -61,25 +88,35 @@ def processed_images():
     
         image_quadtree.check_img(MainPath + "/temp/"+image_name.split('.')[0]+"_0",image)
         words_images_path = image_quadtree.get_images()
-        #words_images_path = sorted(words_images_path, key=lambda x: gn(x))
-        # tes(combine(words_images_path))
         combine(words_images_path)
         for words_image_path in words_images_path:
             word_image = Image.open(MainPath + "/temp/"+words_image_path)
             filename = words_image_path
-            word_image.save(app.config['UPLOAD_FOLDER'] + "/" + filename)
+            word_image.save(MainPath + "/temp/" + filename)  # Save only to the temp folder
 
-        
-        #     # os.remove("temp/"+words_image_path) 
-        # txt += image_quadtree.content
-            
-    # return render_template('myconsole.html', info=txt)
     return render_template('processed_images.html', OGimages=origenal_images_path)
 
+@app.route('/clear_and_back', methods=['POST'])
+def clear_and_back():
+    # Remove uploaded images from static/upload folder
+    upload_folder_path = app.config['UPLOAD_FOLDER']
+    for filename in os.listdir(upload_folder_path):
+        file_path = os.path.join(upload_folder_path, filename)
+        if os.path.isfile(file_path):
+            os.remove(file_path)
 
+    # Remove processed images from temp folder
+    temp_folder_path = MainPath + "/temp"
+    for filename in os.listdir(temp_folder_path):
+        file_path = os.path.join(temp_folder_path, filename)
+        if os.path.isfile(file_path):
+            os.remove(file_path)
+
+    # Redirect back to the image processing page
+    return render_template('index.html')
 
 if __name__ == '__main__': 
-    # os.system("cls")
+    if MainPath[0].isalpha() and MainPath[1] == ":": os.system("cls") # Windows localhost
     if os.path.exists(app.config['UPLOAD_FOLDER']):
         shutil.rmtree(app.config['UPLOAD_FOLDER'])
     os.makedirs(app.config['UPLOAD_FOLDER'])
