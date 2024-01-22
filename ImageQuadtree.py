@@ -1,7 +1,7 @@
 import os, math, random
 from PIL import Image
-# from tfJS_Selenium_def import tfJS
 from _keras import check_img_for_word
+# from tfJS_Selenium_def import tfJS
 
 MainPath = os.path.dirname(os.path.abspath(__file__)).replace("\\", "/")
 class Quadtree:
@@ -12,7 +12,7 @@ class Quadtree:
     def check_img(self, path, image):
         w = image.width
         h = image.height
-        lengh = 75
+        length = 75
         if image.format == "PNG":
             image = image.convert("RGB")
         image.save(path + ".jpg")
@@ -28,8 +28,8 @@ class Quadtree:
             # print(current_path)
             current_image = Image.open(current_path+".jpg")
             w, h = current_image.size
-            # if  tfJS(current_path+".jpg")> 0.5 or w <= lengh or h <= lengh:
-            if check_img_for_word(current_path+".jpg") > 0.5 or w <= lengh or h <= lengh:
+            # if  tfJS(current_path+".jpg")> 0.5 or w <= length or h <= length:
+            if check_img_for_word(current_path+".jpg") > 0.5 or w <= length or h <= length:
                 self.images.append(current_path[len(MainPath + "/temp/"):]+".jpg") 
             else:
                 devided_images = self.subdivide(current_image,x,y)

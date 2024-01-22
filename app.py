@@ -1,11 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for
-import os, re
-from werkzeug.utils import secure_filename
-from ImageQuadtree import Quadtree
+import os, shutil
+# from Pytesseract import tes
 from PIL import Image, ImageFile
-import shutil
+from ImageQuadtree import Quadtree
 from ImageCombine_def import combine
-from Pytesseract import tes
+from werkzeug.utils import secure_filename
+from flask import Flask, url_for, request, redirect, render_template
 
 app = Flask(__name__)
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -51,9 +50,9 @@ def upload():
 # @app.route('/processed_images')
 # def processed_images():
 #     # Get the list of processed images in the 'uploads' folder
-#     origenal_images_path = os.listdir(app.config['UPLOAD_FOLDER'])
+#     original_images_path = os.listdir(app.config['UPLOAD_FOLDER'])
 #     txt = 0
-#     for image_name in origenal_images_path:
+#     for image_name in original_images_path:
 #         txt += 1
 #         image_quadtree = Quadtree()
 #         image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_name)
@@ -74,13 +73,13 @@ def upload():
 #         # txt += image_quadtree.content
             
 #     # return render_template('myconsole.html', info=txt)
-#     return render_template('processed_images.html', OGimages=origenal_images_path)
+#     return render_template('processed_images.html', OGimages=original_images_path)
 @app.route('/processed_images')
 def processed_images():
     # Get the list of processed images in the 'uploads' folder
-    origenal_images_path = os.listdir(app.config['UPLOAD_FOLDER'])
+    original_images_path = os.listdir(app.config['UPLOAD_FOLDER'])
     txt = 0
-    for image_name in origenal_images_path:
+    for image_name in original_images_path:
         txt += 1
         image_quadtree = Quadtree()
         image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_name)
@@ -94,7 +93,7 @@ def processed_images():
             filename = words_image_path
             word_image.save(MainPath + "/temp/" + filename)  # Save only to the temp folder
 
-    return render_template('processed_images.html', OGimages=origenal_images_path)
+    return render_template('processed_images.html', OGimages=original_images_path)
 
 @app.route('/clear_and_back', methods=['POST'])
 def clear_and_back():
