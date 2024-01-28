@@ -5,10 +5,16 @@
 </head>
 <body>
     <h1>Image Processing</h1>
-    <form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
-        <input type="file" name="image_folder" multiple>
-        <input type="submit" value="Upload">
-    </form>
+    <script>
+        fetch(url, {
+          method: "get",
+          headers: new Headers({
+            "ngrok-skip-browser-warning": "69420",
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => console.log(data))
+          .catch((err) => console.log(err));
+    </script>
 </body>
 </html>
-
