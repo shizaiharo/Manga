@@ -1,4 +1,4 @@
-import os, shutil, requests
+import os, shutil, requests, ngrok
 # from Pytesseract import tes
 from PIL import Image, ImageFile
 from ImageQuadtree import Quadtree
@@ -23,10 +23,11 @@ app.config['UPLOAD_FOLDER'] = MainPath + '/static/upload'  # Folder to store upl
         
 @app.route('/')
 def index():
-    response = make_response(render_template('index.html'))
+    # response = make_response(render_template('index.html'))
     # response.headers.add('ngrok-skip-browser-warning', 'my-value')
-    response.headers['User-Agent'] = 'YourCustomUserAgent'
-    return response
+    # response.headers['User-Agent'] = 'YourCustomUserAgent'
+    # return response
+    return render_template('index.html')
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -119,6 +120,10 @@ def clear_and_back():
 
 if __name__ == '__main__': 
     if MainPath[0].isalpha() and MainPath[1] == ":": os.system("cls") # Windows localhost
+    else:
+        listener = ngrok.forward("localhost:6969", authtoken_from_env=True,
+        request_header_add=["ngrok-skip-browser-warning", "ngrokisbullshit"])
+    print(f"Ingress established at: {listener.url()}")
     if os.path.exists(app.config['UPLOAD_FOLDER']):
         shutil.rmtree(app.config['UPLOAD_FOLDER'])
     os.makedirs(app.config['UPLOAD_FOLDER'])
