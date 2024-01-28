@@ -4,8 +4,8 @@ from keras.models import load_model
 
 np.set_printoptions(suppress=True)
 MainPath = os.path.dirname(os.path.abspath(__file__)).replace("\\", "/")
-keras_load_model = load_model(MainPath + "/keras_model.h5", compile=False)
-model = tensorflow.keras.models.keras_load_model
+# keras_load_model = load_model(MainPath + "/keras_model.h5", compile=False)
+model = tensorflow.keras.models.load_model(MainPath + "/keras_model.h5", compile=False)
 class_names = open(MainPath + "/labels.txt", "r").readlines()
 data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
 size = (224, 224)
