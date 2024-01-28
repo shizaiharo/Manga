@@ -7,3 +7,4 @@ tensorflow
 googletrans
 pytesseract
 Pillow==9.5.0
+ngrok
