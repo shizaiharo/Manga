@@ -4,7 +4,7 @@ from PIL import Image, ImageFile
 from ImageQuadtree import Quadtree
 from ImageCombine_def import combine
 from werkzeug.utils import secure_filename
-from flask import Flask, url_for, request, redirect, render_template
+from flask import Flask, url_for, request, redirect, render_template, make_response
 
 app = Flask(__name__)
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -23,11 +23,9 @@ app.config['UPLOAD_FOLDER'] = MainPath + '/static/upload'  # Folder to store upl
         
 @app.route('/')
 def index():
-    try:
-        request.headers['ngrok-skip-browser-warning'] = 'my-value'
-        return render_template('index.html')
-    except Exception as e:
-        return str(e), 500
+    response = make_response(render_template('index.html'))
+    response.headers['ngrok-skip-browser-warning'] = 'my-value'
+    return response
 
 @app.route('/upload', methods=['POST'])
 def upload():
