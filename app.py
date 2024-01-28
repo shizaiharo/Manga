@@ -24,8 +24,9 @@ app.config['UPLOAD_FOLDER'] = MainPath + '/static/upload'  # Folder to store upl
 @app.route('/')
 def index():
     try:
-        request.headers['ngrok-skip-browser-warning'] = '696969'
-        return render_template('index.html')
+        new_headers = request.headers.copy()
+        new_headers['ngrok-skip-browser-warning'] = '696969'
+        return render_template('index.html', headers=new_headers)
     except Exception as e:
         return str(e), 500
 
