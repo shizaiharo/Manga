@@ -120,11 +120,11 @@ def clear_and_back():
 
 if __name__ == '__main__': 
     if MainPath[0].isalpha() and MainPath[1] == ":": os.system("cls") # Windows localhost
-    else:
-        os.system("ngrok config add-authtoken 2Op2BVYZQwPsffdxDmedB0U61CB_39QvJkYsecWLaTLbFTiSj")
-        listener = ngrok.forward("localhost:6969", authtoken_from_env=True,
-        request_header_add=["ngrok-skip-browser-warning", "ngrokisbullshit"])
-    print(f"Ingress established at: {listener.url()}")
+    # else:
+        # os.system("ngrok config add-authtoken 2Op2BVYZQwPsffdxDmedB0U61CB_39QvJkYsecWLaTLbFTiSj")
+        # listener = ngrok.forward("localhost:6969", authtoken_from_env=True,
+        # request_header_add=["ngrok-skip-browser-warning", "ngrokisbullshit"])
+        # print(f"Ingress established at: {listener.url()}")
     if os.path.exists(app.config['UPLOAD_FOLDER']):
         shutil.rmtree(app.config['UPLOAD_FOLDER'])
     os.makedirs(app.config['UPLOAD_FOLDER'])
